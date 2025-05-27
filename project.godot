@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="ProjectGreyGoo"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="res://node_2d.tscn"
+config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
