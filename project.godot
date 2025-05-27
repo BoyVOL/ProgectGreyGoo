@@ -6,28 +6,18 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
 [application]
 
-config/name="Cyber Eugenics"
-run/main_scene="res://GameScenes/MainScene.tscn"
-config/icon="res://icon.png"
+config/name="ProjectGreyGoo"
+config/features=PackedStringArray("4.4", "Mobile")
+config/icon="res://icon.svg"
 
-[physics]
+[dotnet]
 
-common/enable_pause_aware_picking=true
-2d/thread_model=0
-2d/bp_hash_table_size=1762
-2d/cell_size=146
-2d/large_object_surface_threshold_in_cells=283
-2d/default_gravity=0
+project/assembly_name="ProjectGreyGoo"
 
 [rendering]
 
-quality/intended_usage/framebuffer_allocation=0
-quality/intended_usage/framebuffer_allocation.mobile=0
-threads/thread_model=2
-quality/reflections/texture_array_reflections=false
-quality/reflections/high_quality_ggx=false
-environment/default_environment="res://default_env.tres"
+renderer/rendering_method="mobile"
