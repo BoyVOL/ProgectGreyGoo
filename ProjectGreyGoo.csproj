@@ -6,5 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="addons\FlockBehaviour\FlockNode\FlockNode.cs" />
+    <Content Include="Scenes\TestScenes\TestScene.cs" />
   </ItemGroup>
 </Project>

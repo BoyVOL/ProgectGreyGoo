@@ -1,8 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
-
+/// <summary>
+/// Класс для реализации алгоритма поведения стаи птиц
+/// </summary>
 public partial class FlockNode : Node
 {
 	// Called when the node enters the scene tree for the first time.
@@ -22,8 +25,16 @@ public partial class FlockNode : Node
 		Godot.Collections.Array<Node> Test = this.GetChildren(false);
 		foreach (Node2D node in Test)
 		{
-			GD.Print(node.Position);
+			if (node is IFlockable2D) {
+				GD.Print(node.Position);
+				GD.Print(((IFlockable2D)node).TargetVector);
+			}
 		}
-    }
+	}
 
+}
+
+public interface IFlockable2D
+{
+	Vector2 TargetVector{ get; set; }
 }

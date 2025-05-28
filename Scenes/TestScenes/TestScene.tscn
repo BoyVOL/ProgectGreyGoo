@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://buyg35bwbb8kf"]
+[gd_scene load_steps=5 format=3 uid="uid://buyg35bwbb8kf"]
 
 [ext_resource type="Script" uid="uid://ca38kxglw5xfq" path="res://Scenes/TestScenes/TestScene.cs" id="1_wicfy"]
 [ext_resource type="Script" uid="uid://cpm53n7etikut" path="res://addons/FlockBehaviour/FlockNode/FlockNode.cs" id="2_go42g"]
 [ext_resource type="Texture2D" uid="uid://8mq2og7ejgij" path="res://Resources/icon.svg" id="3_sreuk"]
+[ext_resource type="Script" uid="uid://yq8jq1u4wm5k" path="res://Scenes/TestScenes/Icon.cs" id="4_fe8sf"]
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_wicfy")
@@ -14,6 +15,7 @@ metadata/_custom_type_script = "uid://cpm53n7etikut"
 [node name="Icon" type="Sprite2D" parent="FlockNode"]
 position = Vector2(84, 101)
 texture = ExtResource("3_sreuk")
+script = ExtResource("4_fe8sf")
 
 [node name="Icon2" type="Sprite2D" parent="FlockNode"]
 position = Vector2(404, 250)
