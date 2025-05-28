@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://buyg35bwbb8kf"]
 
-[ext_resource type="Script" uid="uid://ca38kxglw5xfq" path="res://TestScene.cs" id="1_wicfy"]
+[ext_resource type="Script" uid="uid://ca38kxglw5xfq" path="res://Scenes/TestScenes/TestScene.cs" id="1_wicfy"]
 [ext_resource type="Script" uid="uid://cpm53n7etikut" path="res://addons/FlockBehaviour/FlockNode/FlockNode.cs" id="2_go42g"]
-[ext_resource type="Texture2D" uid="uid://8mq2og7ejgij" path="res://icon.svg" id="3_sreuk"]
+[ext_resource type="Texture2D" uid="uid://8mq2og7ejgij" path="res://Resources/icon.svg" id="3_sreuk"]
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_wicfy")
