@@ -1,8 +1,9 @@
 using Godot;
 using System;
 
-public partial class Icon : Sprite2D, IFlockable2D
+public partial class Icon3 : Sprite2D, IFlockable2D
 {
+    
     public Vector2 TargetVector { get; set; }
     [Export]
     public float VModule;
@@ -12,5 +13,4 @@ public partial class Icon : Sprite2D, IFlockable2D
         base._PhysicsProcess(delta);
         this.Position += TargetVector * VModule;
     }
-
 }

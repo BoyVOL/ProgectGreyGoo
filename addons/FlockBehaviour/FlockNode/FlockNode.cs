@@ -25,16 +25,22 @@ public partial class FlockNode : Node
 		Godot.Collections.Array<Node> Test = this.GetChildren(false);
 		foreach (Node2D node in Test)
 		{
-			if (node is IFlockable2D) {
-				GD.Print(node.Position);
-				GD.Print(((IFlockable2D)node).TargetVector);
+			if (node is IFlockable2D)
+			{
+				((IFlockable2D)node).TargetVector = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1);
 			}
 		}
 	}
 
 }
 
+/// <summary>
+/// Интерфейс для взаимодействия FlockNode и дочерних нод
+/// </summary>
 public interface IFlockable2D
 {
-	Vector2 TargetVector{ get; set; }
+	/// <summary>
+	/// Нормализированный вектор для указания направления, в котором надо двигаться объекту чтобы оставаться в стае
+	/// </summary>
+	Vector2 TargetVector { get; set; }
 }
