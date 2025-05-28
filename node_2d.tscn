@@ -14,3 +14,11 @@ metadata/_custom_type_script = "uid://cpm53n7etikut"
 [node name="Icon" type="Sprite2D" parent="FlockNode"]
 position = Vector2(84, 101)
 texture = ExtResource("2_epypp")
+
+[node name="Icon2" type="Sprite2D" parent="FlockNode"]
+position = Vector2(404, 250)
+texture = ExtResource("2_epypp")
+
+[node name="Icon3" type="Sprite2D" parent="FlockNode"]
+position = Vector2(224, 350)
+texture = ExtResource("2_epypp")
