@@ -21,7 +21,7 @@ texture = ExtResource("3_sreuk")
 position = Vector2(84, 101)
 texture = ExtResource("3_sreuk")
 script = ExtResource("4_fe8sf")
-VModule = 10.0
+VModule = 100.0
 
 [node name="Camera2D" type="Camera2D" parent="FlockNode/Icon"]
 position = Vector2(-3, 4)
@@ -42,7 +42,7 @@ VModule = 1.0
 position = Vector2(609, 279)
 texture = ExtResource("3_sreuk")
 script = ExtResource("5_5qkg8")
-VModule = 1.0
+VModule = 10.0
 
 [node name="Icon6" type="Sprite2D" parent="FlockNode"]
 position = Vector2(670, 453)

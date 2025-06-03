@@ -9,15 +9,16 @@ public partial class IflockableTester : Sprite2D, IFlockable2D
     public float VModule;
 
     [Export]
-    public Vector2 Speed { get; set; }
+    public Vector2 Speed { get; private set; }
+
+    [Export]
+    public double AvoidRadius { get; private set; } = 10;
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        Vector2 OldPos = this.Position;
-        this.Position += TargetVector * VModule;
-        Speed = Position - OldPos;
-
+        Vector2 OldPos = Position;
+        Position += TargetVector * VModule * (float)delta;
+        Speed = (Position - OldPos) / (float)delta;
     }
-
 }

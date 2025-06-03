@@ -19,9 +19,9 @@ public partial class FlockNode : Node
 		base._Process(delta);
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public override void _EnterTree()
 	{
-		base._PhysicsProcess(delta);
+		base._EnterTree();
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
 		foreach (Node2D node in Children)
 		{
@@ -30,7 +30,15 @@ public partial class FlockNode : Node
 				((IFlockable2D)node).TargetVector = new Vector2(GD.Randf() * 2 - 1, GD.Randf() * 2 - 1);
 			}
 		}
+    }
+
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+		Godot.Collections.Array<Node> Children = this.GetChildren(false);
 		GD.Print(GetCenter(Children));
+		GD.Print(GetMedianSpeed(Children));
 	}
 
 	/// <summary>
@@ -61,7 +69,18 @@ public partial class FlockNode : Node
 	/// <returns></returns>
 	protected Vector2 GetMedianSpeed(Godot.Collections.Array<Node> children = null)
 	{
-		return Vector2.Zero;
+		Vector2 MidSpeed = Vector2.Zero;
+		int IflockCount = 0;
+		foreach (Node2D node in children)
+		{
+			if (node is IFlockable2D)
+			{
+				MidSpeed += ((IFlockable2D)node).Speed;
+				IflockCount++;
+			}
+		}
+		MidSpeed /= IflockCount;
+		return MidSpeed;
 	}
 
 	/// <summary>
@@ -96,5 +115,10 @@ public interface IFlockable2D
 	/// <summary>
 	/// Вектор скорости объекта, который нужно знать головной ноде
 	/// </summary>
-	Vector2 Speed { get; set; }
+	Vector2 Speed { get; }
+	
+	/// <summary>
+	/// Значение радиуса, ближе которого объекты стараются не подпускать к себе соседей
+	/// </summary>
+	double AvoidRadius { get; }
 }
