@@ -8,6 +8,9 @@ using System.Runtime.CompilerServices;
 /// </summary>
 public partial class FlockNode : Node
 {
+
+	protected delegate void IFlockOperator(Node2D Param1);
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -37,6 +40,8 @@ public partial class FlockNode : Node
 	{
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
+		MakeAvoid(Children);
+		Normalise(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
 	}
@@ -46,7 +51,7 @@ public partial class FlockNode : Node
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <returns>средний вектор всех позиций нод</returns>
-	protected Vector2 GetCenter(Godot.Collections.Array<Node> children = null)
+	protected Vector2 GetCenter(Godot.Collections.Array<Node> children)
 	{
 		Vector2 GeometricCenter = Vector2.Zero;
 		int IflockCount = 0;
@@ -63,11 +68,56 @@ public partial class FlockNode : Node
 	}
 
 	/// <summary>
+	/// Метод, возвращающий компоненту скорости для предотвращения сближения объектов
+	/// </summary>
+	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
+	/// <returns></returns>
+	protected void MakeAvoid(Godot.Collections.Array<Node> children)
+	{
+		foreach (Node2D node1 in children)
+		{
+			if (node1 is IFlockable2D)
+			{
+				foreach (Node2D node2 in children)
+				{
+					if (node2 is IFlockable2D)
+					{
+						float Distance = (node1.Position - node2.Position).Length();
+						if (Distance < ((IFlockable2D)node1).AvoidRadius)
+						{
+							((IFlockable2D)node1).TargetVector += (node1.Position - node2.Position).Normalized();
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/// <summary>
+	/// Метод, нормализующий целевые векторы всех IFlockable2D
+	/// </summary>
+	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
+	/// <returns></returns>
+	protected void Normalise(Godot.Collections.Array<Node> children)
+	{
+		foreach (Node2D node in children)
+		{
+			if (node is IFlockable2D)
+			{
+				if(((IFlockable2D)node).TargetVector.LengthSquared()>1){
+					((IFlockable2D)node).TargetVector = ((IFlockable2D)node).TargetVector.Normalized();
+				}
+			}
+		}
+	}
+
+	/// <summary>
 	/// Метод для возврата средней скорости всех Iflockable нод
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <returns></returns>
-	protected Vector2 GetMedianSpeed(Godot.Collections.Array<Node> children = null)
+	protected Vector2 GetMedianSpeed(Godot.Collections.Array<Node> children)
 	{
 		Vector2 MidSpeed = Vector2.Zero;
 		int IflockCount = 0;
@@ -88,7 +138,7 @@ public partial class FlockNode : Node
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <returns>отдельную коллекцию со всеми Iflockable</returns>
-	protected Godot.Collections.Array<Node> GetIFlockables(Godot.Collections.Array<Node> children = null)
+	protected Godot.Collections.Array<Node> GetIFlockables(Godot.Collections.Array<Node> children)
 	{
 		Godot.Collections.Array<Node> result = new Godot.Collections.Array<Node>();
 		foreach (Node2D node in children)
