@@ -41,7 +41,7 @@ public partial class FlockNode : Node
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
 		MakeAvoid(Children);
-		Normalise(Children);
+		SpeedCap(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
 	}
@@ -95,11 +95,11 @@ public partial class FlockNode : Node
 
 
 	/// <summary>
-	/// Метод, нормализующий целевые векторы всех IFlockable2D
+	/// Метод, ограничивающий целевой вектор IFlockable2D не больше 1
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <returns></returns>
-	protected void Normalise(Godot.Collections.Array<Node> children)
+	protected void SpeedCap(Godot.Collections.Array<Node> children)
 	{
 		foreach (Node2D node in children)
 		{
@@ -158,14 +158,19 @@ public partial class FlockNode : Node
 public interface IFlockable2D
 {
 	/// <summary>
-	/// Нормализированный вектор для указания направления, в котором надо двигаться объекту чтобы оставаться в стае
+	/// Вектор множитель скорости относительно максимально йскорости объекта
 	/// </summary>
 	Vector2 TargetVector { get; set; }
 
 	/// <summary>
-	/// Вектор скорости объекта, который нужно знать головной ноде
+	/// Текущий вектор скорости объекта
 	/// </summary>
 	Vector2 Speed { get; }
+
+	/// <summary>
+	/// Вектор потенциаьно максимальной скорости объекта
+	/// </summary>
+	float MaxSpeed { get; }
 	
 	/// <summary>
 	/// Значение радиуса, ближе которого объекты стараются не подпускать к себе соседей
