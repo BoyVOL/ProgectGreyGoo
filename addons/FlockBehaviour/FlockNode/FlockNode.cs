@@ -40,7 +40,8 @@ public partial class FlockNode : Node
 	{
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
-		MakeAvoid(Children);
+		Separation(Children,100);
+		Cohesion(Children);
 		SpeedCap(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
@@ -71,8 +72,9 @@ public partial class FlockNode : Node
 	/// Метод, добавляющий компоненту скорости для предотвращения сближения объектов
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
+	/// <param name="Coefficient">Коэффициент важности данного правила</param>
 	/// <returns></returns>
-	protected void MakeAvoid(Godot.Collections.Array<Node> children)
+	protected void Separation(Godot.Collections.Array<Node> children,float Coefficient)
 	{
 		foreach (Node2D node1 in children)
 		{
@@ -85,10 +87,27 @@ public partial class FlockNode : Node
 						float Distance = (node1.Position - node2.Position).Length();
 						if (Distance < ((IFlockable2D)node1).AvoidRadius)
 						{
-							((IFlockable2D)node1).TargetVector += (node1.Position - node2.Position).Normalized();
+							((IFlockable2D)node1).TargetVector += (node1.Position - node2.Position).Normalized()*Coefficient;
 						}
 					}
 				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Метод, который добавляет компоненту стремления к центру масс
+	/// </summary>
+	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
+	protected void Cohesion(Godot.Collections.Array<Node> children)
+	{
+		Vector2 Center = GetCenter(children);
+
+		foreach (Node2D node in children)
+		{
+			if (node is IFlockable2D)
+			{
+				((IFlockable2D)node).TargetVector += Center - node.Position;
 			}
 		}
 	}
@@ -105,7 +124,8 @@ public partial class FlockNode : Node
 		{
 			if (node is IFlockable2D)
 			{
-				if(((IFlockable2D)node).TargetVector.LengthSquared()>1){
+				if (((IFlockable2D)node).TargetVector.LengthSquared() > 1)
+				{
 					((IFlockable2D)node).TargetVector = ((IFlockable2D)node).TargetVector.Normalized();
 				}
 			}
