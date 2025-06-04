@@ -40,8 +40,9 @@ public partial class FlockNode : Node
 	{
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
-		Separation(Children,100);
+		Separation(Children,10);
 		Cohesion(Children);
+		//Alignment(Children, 10);
 		SpeedCap(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
@@ -73,13 +74,13 @@ public partial class FlockNode : Node
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <param name="Coefficient">Коэффициент важности данного правила</param>
-	/// <returns></returns>
 	protected void Separation(Godot.Collections.Array<Node> children,float Coefficient)
 	{
 		foreach (Node2D node1 in children)
 		{
 			if (node1 is IFlockable2D)
 			{
+				Vector2 AvoidVector = Vector2.Zero;
 				foreach (Node2D node2 in children)
 				{
 					if (node2 is IFlockable2D)
@@ -87,10 +88,32 @@ public partial class FlockNode : Node
 						float Distance = (node1.Position - node2.Position).Length();
 						if (Distance < ((IFlockable2D)node1).AvoidRadius)
 						{
-							((IFlockable2D)node1).TargetVector += (node1.Position - node2.Position).Normalized()*Coefficient;
+							AvoidVector += node1.Position - node2.Position;
 						}
 					}
+					if (AvoidVector.Length() != 0)
+					{
+						GD.Print((float)(((IFlockable2D)node1).AvoidRadius/AvoidVector.Length()), AvoidVector.Length());
+						((IFlockable2D)node1).TargetVector += (float)(((IFlockable2D)node1).AvoidRadius/AvoidVector.Length())*AvoidVector.Normalized() * Coefficient;
+					}
 				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Добавление компоненту выравнивания относительно остальных в стае
+	/// </summary>
+	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
+	/// <param name="Coefficient">Коэффициент важности данного правила</param>
+	protected void Alignment(Godot.Collections.Array<Node> children, float Coefficient)
+	{
+		Vector2 MidSpeed = GetMedianSpeed(children);
+		foreach (Node2D node in children)
+		{
+			if (node is IFlockable2D)
+			{
+				((IFlockable2D)node).TargetVector += MidSpeed - ((IFlockable2D)node).Speed * Coefficient;
 			}
 		}
 	}

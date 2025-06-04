@@ -14,7 +14,7 @@ public partial class IflockableTester : Sprite2D, IFlockable2D
     public Vector2 Speed { get; protected set; }
 
     [Export]
-    public double AvoidRadius { get; protected set; } = 100;
+    public double AvoidRadius { get; protected set; } = 140;
 
     public override void _PhysicsProcess(double delta)
     {
