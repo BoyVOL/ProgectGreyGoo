@@ -7,8 +7,13 @@ using System.Runtime.CompilerServices;
 /// Класс для реализации алгоритма поведения стаи птиц
 /// </summary>
 public partial class FlockNode : Node
-{
-
+{	
+	[Export]
+	float SeparationCoefficient = 10000;
+	[Export]
+	float CohesionCoefficient = (float)0.01;
+	[Export]
+	float AlignmentCoefficient = 10;
 	protected delegate void IFlockOperator(Node2D Param1);
 
 	// Called when the node enters the scene tree for the first time.
@@ -40,12 +45,10 @@ public partial class FlockNode : Node
 	{
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
-		Separation(Children,(float)1000000);
-		Cohesion(Children,1);
-		Alignment(Children, 10000);
+		Separation(Children,SeparationCoefficient);
+		Cohesion(Children,CohesionCoefficient);
+		Alignment(Children, AlignmentCoefficient);
 		NormaliseAll(Children);
-		GD.Print(GetCenter(Children));
-		GD.Print(GetMedianSpeed(Children));
 	}
 
 	/// <summary>
@@ -120,7 +123,6 @@ public partial class FlockNode : Node
 							AlignVector += ((IFlockable2D)node2).Speed / Distance;
 						}
 					}
-					GD.Print(AlignVector);
 					((IFlockable2D)node1).TargetVector += AlignVector * Coefficient;
 				}
 			}
@@ -140,7 +142,8 @@ public partial class FlockNode : Node
 		{
 			if (node is IFlockable2D)
 			{
-				((IFlockable2D)node).TargetVector += (Center - node.Position)*Coefficient;
+				Vector2 Difference = (Center - node.Position);
+				((IFlockable2D)node).TargetVector += Difference.Normalized()*(float)Math.Sqrt(Difference.Length())*Coefficient;
 			}
 		}
 	}
