@@ -8,7 +8,7 @@ public partial class IflockableTester : Sprite2D, IFlockable2D
     public float MaxSpeed { get => VModule; }
 
     [Export]
-    public float VModule =100;
+    public float VModule =1000;
 
     [Export]
     public Vector2 Speed { get; protected set; }

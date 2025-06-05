@@ -42,7 +42,7 @@ public partial class FlockNode : Node
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
 		Separation(Children,(float)1000000);
 		Cohesion(Children,1);
-		//Alignment(Children, 10);
+		Alignment(Children, 10000);
 		NormaliseAll(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
@@ -111,17 +111,17 @@ public partial class FlockNode : Node
 			{
 				foreach (Node2D node2 in children)
 				{
-					Vector2 AlignSpeed = Vector2.Zero;
+					Vector2 AlignVector = Vector2.Zero;
 					if (node2 is IFlockable2D)
 					{
 						float Distance = (node1.Position - node2.Position).LengthSquared();
-						Vector2 AvoidVector = Vector2.Zero;
 						if (Distance != 0)
 						{
-
+							AlignVector += ((IFlockable2D)node2).Speed / Distance;
 						}
-						((IFlockable2D)node1).TargetVector += AvoidVector * Coefficient;
 					}
+					GD.Print(AlignVector);
+					((IFlockable2D)node1).TargetVector += AlignVector * Coefficient;
 				}
 			}
 		}

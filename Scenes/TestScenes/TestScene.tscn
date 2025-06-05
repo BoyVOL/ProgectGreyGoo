@@ -18,15 +18,17 @@ position = Vector2(404, 250)
 texture = ExtResource("3_sreuk")
 
 [node name="Icon" type="Sprite2D" parent="FlockNode"]
-position = Vector2(84, 101)
+position = Vector2(780, 367)
 texture = ExtResource("3_sreuk")
 script = ExtResource("4_fe8sf")
 
 [node name="Camera2D" type="Camera2D" parent="FlockNode/Icon"]
-position = Vector2(-3, 4)
+position = Vector2(-3, 3)
+scale = Vector2(0.81, 0.057)
+zoom = Vector2(0.1, 0.1)
 
 [node name="Icon3" type="Sprite2D" parent="FlockNode"]
-position = Vector2(224, 350)
+position = Vector2(-2057, -2080)
 texture = ExtResource("3_sreuk")
 script = ExtResource("5_5qkg8")
 
@@ -41,6 +43,41 @@ texture = ExtResource("3_sreuk")
 script = ExtResource("5_5qkg8")
 
 [node name="Icon6" type="Sprite2D" parent="FlockNode"]
-position = Vector2(670, 453)
+position = Vector2(660, 477)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon7" type="Sprite2D" parent="FlockNode"]
+position = Vector2(-512, -685)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon8" type="Sprite2D" parent="FlockNode"]
+position = Vector2(2536, -290)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon9" type="Sprite2D" parent="FlockNode"]
+position = Vector2(794, 197)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon10" type="Sprite2D" parent="FlockNode"]
+position = Vector2(441, 428)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon11" type="Sprite2D" parent="FlockNode"]
+position = Vector2(-956, 182)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon12" type="Sprite2D" parent="FlockNode"]
+position = Vector2(-300, 1155)
+texture = ExtResource("3_sreuk")
+script = ExtResource("5_5qkg8")
+
+[node name="Icon13" type="Sprite2D" parent="FlockNode"]
+position = Vector2(1757, 753)
 texture = ExtResource("3_sreuk")
 script = ExtResource("5_5qkg8")
