@@ -40,10 +40,10 @@ public partial class FlockNode : Node
 	{
 		base._PhysicsProcess(delta);
 		Godot.Collections.Array<Node> Children = this.GetChildren(false);
-		Separation(Children,10);
-		Cohesion(Children);
+		Separation(Children,(float)1000000);
+		Cohesion(Children,1);
 		//Alignment(Children, 10);
-		SpeedCap(Children);
+		NormaliseAll(Children);
 		GD.Print(GetCenter(Children));
 		GD.Print(GetMedianSpeed(Children));
 	}
@@ -80,23 +80,20 @@ public partial class FlockNode : Node
 		{
 			if (node1 is IFlockable2D)
 			{
+				float SqrAvoid = (float)(((IFlockable2D)node1).AvoidRadius*((IFlockable2D)node1).AvoidRadius);
 				Vector2 AvoidVector = Vector2.Zero;
 				foreach (Node2D node2 in children)
 				{
 					if (node2 is IFlockable2D)
 					{
-						float Distance = (node1.Position - node2.Position).Length();
-						if (Distance < ((IFlockable2D)node1).AvoidRadius)
+						float Distance = (node1.Position - node2.Position).LengthSquared();
+						if (Distance > 0 && Distance < SqrAvoid)
 						{
-							AvoidVector += node1.Position - node2.Position;
+							AvoidVector += ((node1.Position - node2.Position).Normalized() / Distance);
 						}
 					}
-					if (AvoidVector.Length() != 0)
-					{
-						GD.Print((float)(((IFlockable2D)node1).AvoidRadius/AvoidVector.Length()), AvoidVector.Length());
-						((IFlockable2D)node1).TargetVector += (float)(((IFlockable2D)node1).AvoidRadius/AvoidVector.Length())*AvoidVector.Normalized() * Coefficient;
-					}
 				}
+				((IFlockable2D)node1).TargetVector +=  AvoidVector * Coefficient;
 			}
 		}
 	}
@@ -108,12 +105,24 @@ public partial class FlockNode : Node
 	/// <param name="Coefficient">Коэффициент важности данного правила</param>
 	protected void Alignment(Godot.Collections.Array<Node> children, float Coefficient)
 	{
-		Vector2 MidSpeed = GetMedianSpeed(children);
-		foreach (Node2D node in children)
+		foreach (Node2D node1 in children)
 		{
-			if (node is IFlockable2D)
+			if (node1 is IFlockable2D)
 			{
-				((IFlockable2D)node).TargetVector += MidSpeed - ((IFlockable2D)node).Speed * Coefficient;
+				foreach (Node2D node2 in children)
+				{
+					Vector2 AlignSpeed = Vector2.Zero;
+					if (node2 is IFlockable2D)
+					{
+						float Distance = (node1.Position - node2.Position).LengthSquared();
+						Vector2 AvoidVector = Vector2.Zero;
+						if (Distance != 0)
+						{
+
+						}
+						((IFlockable2D)node1).TargetVector += AvoidVector * Coefficient;
+					}
+				}
 			}
 		}
 	}
@@ -122,7 +131,8 @@ public partial class FlockNode : Node
 	/// Метод, который добавляет компоненту стремления к центру масс
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
-	protected void Cohesion(Godot.Collections.Array<Node> children)
+	/// <param name="Coefficient">Коэффициент важности данного правила</param>
+	protected void Cohesion(Godot.Collections.Array<Node> children, float Coefficient)
 	{
 		Vector2 Center = GetCenter(children);
 
@@ -130,7 +140,7 @@ public partial class FlockNode : Node
 		{
 			if (node is IFlockable2D)
 			{
-				((IFlockable2D)node).TargetVector += Center - node.Position;
+				((IFlockable2D)node).TargetVector += (Center - node.Position)*Coefficient;
 			}
 		}
 	}
@@ -141,7 +151,7 @@ public partial class FlockNode : Node
 	/// </summary>
 	/// <param name="children">Список детей ноды, чтобы не выгружать список по новой каждый раз</param>
 	/// <returns></returns>
-	protected void SpeedCap(Godot.Collections.Array<Node> children)
+	protected void NormaliseAll(Godot.Collections.Array<Node> children)
 	{
 		foreach (Node2D node in children)
 		{
