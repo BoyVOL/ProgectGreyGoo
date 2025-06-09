@@ -21,7 +21,7 @@ project/assembly_name="ProjectGreyGoo"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/FlockBehaviour/plugin.cfg")
+enabled=PackedStringArray("res://addons/ClickOrders/plugin.cfg", "res://addons/FlockBehaviour/plugin.cfg")
 
 [rendering]
 
