@@ -7,9 +7,9 @@ public partial class ClickOrders : EditorPlugin
 {
 	public override void _EnterTree()
 	{
-        var script = GD.Load<Script>("res://addons/ClickOrders/Clicker/Clicker.cs");
-        var texture = GD.Load<Texture2D>("res://addons/ClickOrders/Clicker/ClickerIcon.png");
-        AddCustomType("Clicker", "Node", script, texture);
+        var script = GD.Load<Script>("res://addons/ClickOrders/RTSCam/RTSCam.cs");
+        var texture = GD.Load<Texture2D>("res://addons/ClickOrders/RTSCam/RTSCam.png");
+        AddCustomType("RTSCam", "Camera2D", script, texture);
 		GD.Print("Click Orders Loaded");
 	}
 
