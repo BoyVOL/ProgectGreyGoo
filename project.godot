@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ProjectGreyGoo"
-run/main_scene="uid://buyg35bwbb8kf"
+run/main_scene="uid://d0f2syybjyx5y"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://Resources/icon.svg"
 
@@ -21,7 +21,7 @@ project/assembly_name="ProjectGreyGoo"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/FlockBehaviour/plugin.cfg")
+enabled=PackedStringArray("res://addons/ClickOrders/plugin.cfg", "res://addons/FlockBehaviour/plugin.cfg")
 
 [rendering]
 
