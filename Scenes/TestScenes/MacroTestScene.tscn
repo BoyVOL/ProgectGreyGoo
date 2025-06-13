@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0f2syybjyx5y"]
+
+[ext_resource type="PackedScene" uid="uid://cx4husb323ca3" path="res://Scenes/TestScenes/GUI Mocup.tscn" id="1_w7dln"]
+[ext_resource type="PackedScene" uid="uid://buyg35bwbb8kf" path="res://Scenes/TestScenes/TestScene.tscn" id="2_07bx4"]
+
+[node name="MacroTestScene" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GuiMocup" parent="CanvasLayer" instance=ExtResource("1_w7dln")]
+
+[node name="TestScene" parent="." instance=ExtResource("2_07bx4")]

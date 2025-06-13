@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cx4husb323ca3"]
+
+[node name="GuiMocup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 53.0
+grow_horizontal = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="MarginContainer"]
+layout_mode = 2
+current_tab = 0
+tab_count = 2
+tab_0/title = "Тест1"
+tab_1/title = "Тест2"
