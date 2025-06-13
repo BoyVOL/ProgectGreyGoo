@@ -5,8 +5,8 @@
 
 [node name="MacroTestScene" type="Node"]
 
+[node name="TestScene" parent="." instance=ExtResource("2_07bx4")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GuiMocup" parent="CanvasLayer" instance=ExtResource("1_w7dln")]
-
-[node name="TestScene" parent="." instance=ExtResource("2_07bx4")]
